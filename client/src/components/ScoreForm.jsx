@@ -80,7 +80,7 @@ export default function ScoreForm({ onClassified }) {
         payload.sanskrit = Number(sanskrit);
       }
 
-      const res = await api.post("/api/classify", payload);
+      const res = await api.post("/classify", payload);
       const result = res.data?.data?.result;
       if (!result) throw new Error("Unexpected response from server.");
       onClassified?.(result);
