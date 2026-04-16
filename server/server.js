@@ -1,3 +1,5 @@
+console.log("Starting server...");
+console.log("MONGO_URI:", process.env.MONGO_URI);
 const path = require("path");
 const express = require("express");
 const cors = require("cors");
@@ -18,7 +20,14 @@ if (fs.existsSync(serverEnvPath)) {
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
+
+// 🔥 VERY IMPORTANT (handles preflight)
+app.options("*", cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {

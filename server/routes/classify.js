@@ -3,8 +3,7 @@ const router = express.Router();
 
 const { classify } = require("../controllers/classifyController");
 
-// POST /api/classify
+// FINAL CORRECT
 router.post("/classify", classify);
 
 module.exports = router;
-
