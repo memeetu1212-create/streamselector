@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* App layout defaults */
+body {
+  color: #111827; /* Tailwind gray-900 */
+}
+
