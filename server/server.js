@@ -1,4 +1,4 @@
-```js
+
 console.log("Starting server...");
 
 const path = require("path");
@@ -101,4 +101,4 @@ start().catch((err) => {
   console.error("Failed to start server:", err);
   process.exit(1);
 });
-```
+
