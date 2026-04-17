@@ -1,4 +1,3 @@
-
 console.log("Starting server...");
 
 const path = require("path");
@@ -23,14 +22,16 @@ console.log("MONGO_URI:", process.env.MONGO_URI);
 // ✅ Initialize app
 const app = express();
 
-// ✅ Proper CORS (clean & correct)
-app.use(cors({
-  origin: "*",
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
-}));
+// ✅ SIMPLE & CORRECT CORS (FINAL)
+app.use(cors());
 
-app.options("*", cors());
+// ✅ Handle preflight (IMPORTANT)
+app.use((req, res, next) => {
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+  next();
+});
 
 // ✅ Middleware
 app.use(express.json());
@@ -66,14 +67,11 @@ async function start() {
   }
 
   // ✅ Connect MongoDB
-  await mongoose.connect(mongoUri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  await mongoose.connect(mongoUri);
 
   console.log("MongoDB connected");
 
-  // ✅ 404 handler
+  // ✅ 404 handler (must be AFTER routes)
   app.use((req, res) => {
     res.status(404).json({
       success: false,
@@ -101,4 +99,3 @@ start().catch((err) => {
   console.error("Failed to start server:", err);
   process.exit(1);
 });
-
